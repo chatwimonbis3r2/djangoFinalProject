@@ -1,0 +1,112 @@
+{% extends 'Base.html'%}
+{% load humanize %}
+{% load  static %}
+{% block content %}
+    <div class="container col-xxl-8 px-4">
+        <h1 class="text-center">My Order</h1>
+        <hr>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+        <table class="table table-hover">
+            <caption>List of Order</caption>
+            <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Items</th>
+                <th scope="col">Total</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if orders.count == 0 %}
+                <td colspan="6" class="text-center">No Order</td>
+            {% else %}
+                {% for order in orders %}
+                    <tr>
+                    <td scope="row">
+                        <a href="{% url 'DetailOrder' order.oid %}" class="text-decoration-none">
+                            <i class="bi bi-box"></i>
+                            {{ order.oid }} </a>
+                    </td>
+                    <td>{{ order.odate | date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ order.getCount }}</td>
+                    <td>{{ order.getTotal | floatformat:2 }}</td>
+                    <td class="text-start">
+                        {% if order.status == '1' %}
+                            <button class="btn btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn btn-secondary disabled"><i class="bi bi-check-square-fill"></i></button>
+                            <button class="btn btn-secondary disabled"><i class="bi bi-cash"></i></button>
+                            <button class="btn btn-secondary disabled"><i class="bi bi-cash-coin"></i></button>
+                            <button class="btn btn-secondary disabled"><i class="bi bi-truck"></i></button>
+                        {% elif order.status == '2' %}
+                            <button class="btn btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-check-square-fill"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-cash"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-cash-coin"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-truck"></i></button>
+                        {% elif order.status == '3' %}
+                            <button class="btn  btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-check-square-fill"></i></button>
+                            <button class="btn btn-success disabled"><i class="bi bi-cash"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-cash-coin"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-truck"></i></button>
+                        {% elif order.status == '4' %}
+                            <button class="btn  btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-check-square-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-cash"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-cash-coin"></i></button>
+                            <button class="btn  btn-secondary disabled"><i class="bi bi-truck"></i></button>
+                        {% elif order.status == '5' %}
+                            <button class="btn  btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-check-square-fill"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-cash"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-cash-coin"></i></button>
+                            <button class="btn  btn-success disabled"><i class="bi bi-truck"></i></button>
+                        {% elif order.status == '6' %}
+                            <button class="btn  btn-danger disabled"><i class="bi bi-x-square-fill"></i></button>
+                        {% elif order.status == '7' %}
+                            <button class="btn  btn-success disabled"><i class="bi bi-cart-check-fill"></i></button>
+                            <button class="btn  btn-danger disabled"><i class="bi bi-x-square-fill"></i></button>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.status == '1' %}
+                            <button class="btn btn-sm  btn-info disabled"><i class="bi bi-hourglass-bottom"></i></i>
+                                {{order.getStatus}}</button>
+                            {% if request.session.userStatus == 'customer' %}
+                                <a href="{% url 'OrderCancel' order.oid %}" class="text-danger"><i class="bi bi-x-square-fill"></i></a>
+                            {% endif %}
+                        {% elif order.status == '2' %}
+                            <button class="btn btn-sm  btn-info disabled"><i class="bi bi-hourglass-bottom"></i>
+                                {{order.getStatus}}</button>
+                        {% elif order.status == '3' %}
+                            <button class="btn btn-sm  btn-info disabled"><i class="bi bi-hourglass-bottom"></i>
+                                {{order.getStatus}}</button>
+                        {% elif order.status == '4' %}
+                            <button class="btn btn-sm  btn-info disabled"><i class="bi bi-hourglass-bottom"></i>
+                                {{order.getStatus}}</button>
+                        {% endif %}
+                        {% if request.session.userStatus == 'customer' %}
+                            {% if order.status == '5' %}
+                                <button class="btn btn-sm btn-light disabled text-success">
+                                    <i class="bi bi-flag"></i><b>{{order.getStatus}}</b></button>
+                            {% elif order.status == '6' %}
+                                <button class="btn btn-sm btn-light disabled text-danger">
+                                    <i class="bi bi-x-square-fill"></i> <b> {{order.getStatus}}</b> </button>
+                            {% elif order.status == '7' %}
+                                <button class="btn btn-sm btn-light disabled text-danger">
+                                    <i class="bi bi-x-square-fill"></i> <b> {{order.getStatus}} </b> </button>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

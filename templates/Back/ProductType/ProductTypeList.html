@@ -1,0 +1,40 @@
+{% extends 'Back/Dashboard.html' %}
+{% load  static %}
+{% block dashboardcontent %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">ProductType</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{% url 'ProductTypeNew' %}" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-responsive">
+        <caption>List of ProductType</caption>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Desc</th>
+            <th class="text-center" style="width: 110px">Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ProductTypes in ProductType %}
+        <tr>
+            <td>{{ ProductTypes.id }}</td>
+            <td>{{ ProductTypes.name }}</td>
+            <td>{{ ProductTypes.desc }}</td>
+            <td class="text-center" style="width: 110px">
+                <a href="{% url 'ProductTypeEdit' ProductTypes.id %}" class="btn text-warning">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="{% url 'ProductTypeDelete' ProductTypes.id %}" class="btn text-danger">
+                    <i class="bi bi-trash3"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'Back/Dashboard.html' %}
+{% load humanize %}
+{% load static %}
+{% block dashboardcontent %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Employee</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{% url 'EmployeeNew' %}" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-responsive">
+        <caption>List of Employee</caption>
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Birthdate</th>
+            <th scope="col">Position</th>
+            <th scope="col">Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Employee in Employees %}
+            <tr>
+                <td scope="row">{{ Employee.eid }}</td>
+                <td scope="row">{{ Employee.name }}</td>
+                <td scope="row">{{ Employee.birthdate }}</td>
+                <td scope="row">{{ Employee.position }}</td>
+                <td scope="row">
+                    <a href="{% url 'EmployeeEdit' Employee.eid %}" class="btn text-warning">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a href="{% url 'EmployeeDelete' Employee.eid %}" class="btn text-danger">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

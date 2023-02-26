@@ -1,0 +1,14 @@
+{% extends 'Back/Dashboard.html' %}
+{% load  static %}
+{% block dashboardcontent %}
+    <h1>This ProductType Edit</h1>
+    <form method="post" class="form-control">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <div class="text-center mt-3">
+            <button type="submit"  value="save"
+                    class="btn btn-success">Save</button>
+            <input type="button" value="cancel" onclick="history.back()" class="btn btn-secondary">
+        </div>
+    </form>
+{% endblock %}

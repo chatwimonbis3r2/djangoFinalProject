@@ -1,0 +1,22 @@
+{% extends 'Back/Dashboard.html' %}
+{% load  static %}
+{% block dashboardcontent %}
+    <h1>This Customer Delete</h1>
+    <hr>
+    <p><strong>ID: </strong>{{ Customer.cid }}</p>
+    <p><strong>Type: </strong>{{ Customer.name }}</p>
+    <p><strong>Name: </strong>{{ Customer.address }}</p>
+    <p><strong>Net: </strong>{{ Customer.tel }}</p>
+    <hr>
+    <div class="row mb-5">
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="cid" value="{{ Customer.cid }}">
+                <input type="submit" value="Delete" class="btn btn-danger"
+                       onclick="return confirm('Confirm')">
+                <input type="button" value="cancel" onclick="history.back()" class="btn btn-secondary">
+            </form>
+        </div>
+    </div>
+{% endblock %}

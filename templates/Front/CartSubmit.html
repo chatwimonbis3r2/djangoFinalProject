@@ -1,0 +1,67 @@
+{% extends 'Base.html' %}
+{% load  static %}
+{% load humanize %}
+{% block content %}
+    <div class="container col-xxl-8 px-4">
+        <script>
+            var source = window.document.getElementsById("checkout")[0];
+            var specialElementHandlers = {
+                '#hidden-element': function (element, renderer) {
+                    return true;
+                }
+            };
+            var doc = new jsPDF({
+                orientation: 'landscape'
+            });
+            doc.setFont("courier");
+            doc.setFontType("normal");
+            doc.setFontSize(24);
+            doc.setTextColor(100);
+            doc.fromHTML(elementHTML, 15, 15, {
+                'width': 170,
+                'elementHandlers': specialElementHandlers
+            });
+        </script>
+        <div id="checkout">
+            <div class="row">
+                <div class="col col-12"><h1>Check Your Cart</h1></div>
+            </div>
+            <table class="table table-hover">
+                <caption>List of Cart</caption>
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Price </th>
+                    <th scope="col">Quantity </th>
+                    <th scope="col">Total </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="pid" value="{{ item.product.pid }}">
+                        <tr>
+                            <th scope="row">{{ item.product.pid }}</th>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.product.category.name }}</td>
+                            <td>{{ item.product.price|floatformat:0|intcomma }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.total|floatformat:0|intcomma }}</td>
+                        </tr>
+                    </form>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h4 class="text-end">Items: {{ request.session.count }}</h4>
+            <h4 class="text-end">Total: {{ request.session.sum|floatformat:0|intcomma}} THB</h4>
+            <p class="text-center">
+                <a href="{% url 'Basket' %}" class="btn btn-secondary"><i class="fa fa-rotate-back"></i> Back </a>
+                <a href="{% url 'SubmitOrder' %}" class="btn btn-success"
+                onclick="return confirm('Are you sure to order?')"><i class="fa fa-check-double"></i> Submit Order </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

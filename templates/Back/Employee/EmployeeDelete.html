@@ -1,0 +1,22 @@
+{% extends 'Back/Dashboard.html' %}
+{% load  static %}
+{% block dashboardcontent %}
+    <h1>This Employee Delete</h1>
+    <hr>
+    <p><strong>ID: </strong>{{ Employee.eid }}</p>
+    <p><strong>Type: </strong>{{ Employee.name }}</p>
+    <p><strong>Name: </strong>{{ Employee.birthdate }}</p>
+    <p><strong>Net: </strong>{{ Employee.position }}</p>
+    <hr>
+    <div class="row mb-5">
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="eid" value="{{ Employee.eid }}">
+                <input type="submit" value="Delete" class="btn btn-danger"
+                       onclick="return confirm('Confirm')">
+                <input type="button" value="cancel" onclick="history.back()" class="btn btn-secondary">
+            </form>
+        </div>
+    </div>
+{% endblock %}

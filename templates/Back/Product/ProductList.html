@@ -1,0 +1,50 @@
+{% extends 'Back/Dashboard.html' %}
+{% load humanize %}
+{% load static %}
+{% block dashboardcontent %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Product</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{% url 'ProductNew' %}" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-responsive">
+        <caption>List of Product</caption>
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Net</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Manage</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Product in Products %}
+        <tr>
+            <td scope="row">{{ Product.pid }}</td>
+            <td>{{ Product.category.name }}</td>
+            <td>{{ Product.name }}</td>
+            <td>{{ Product.net }}</td>
+            <td>{{ Product.price|floatformat:2|intcomma }}</td>
+            <td>
+                <img src="{{ Product.picture }}"
+                width="200" height="150">
+            </td>
+            <td>
+                <a href="{% url 'ProductEdit' Product.pid %}" class="btn text-warning">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="{% url 'ProductDelete' Product.pid %}" class="btn text-danger">
+                    <i class="bi bi-trash3"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

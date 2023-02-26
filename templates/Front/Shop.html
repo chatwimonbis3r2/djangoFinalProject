@@ -1,0 +1,30 @@
+{% extends 'Base.html' %}
+{% load humanize %}
+{% load  static %}
+{% block content %}
+    <div class="container col-xxl-8 px-4">
+        <h1 class="text-center">All Product</h1>
+        <hr>
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            {% for Product in Products %}
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-body">
+                            <img src="{{ Product.picture }}" class="d-block mx-lg-auto img-fluid">
+                            <h4 class="card-title">{{ Product.name }}</h4>
+                            <h6 class="card-title">{{ Product.category.name }}</h6>
+                            <hr>
+                            <h3 class="card-title pricing-card-title">{{ Product.price|floatformat:0|intcomma }}<small class="text-muted fw-light"> THB</small></h3>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="pid" value="{{ Product.pid }}">
+                                <input type="hidden" name="qnt" value="1" min="1" max="5">
+                                <button type="submit" class="w-100 btn btn-primary">+ Add To Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

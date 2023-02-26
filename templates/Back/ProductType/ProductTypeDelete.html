@@ -1,0 +1,20 @@
+{% extends 'Back/Dashboard.html' %}
+{% load  static %}
+{% block dashboardcontent %}
+    <h1>This ProductType Delete</h1>
+    <hr>
+    <p><strong>ID: </strong>{{ ProductType.id }}</p>
+    <p><strong>Name: </strong>{{ ProductType.name }}</p>
+    <p><strong>Desc: </strong>{{ ProductType.desc }}</p>
+    <div class="row">
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ ProductType.id }}">
+                <input type="submit" value="Delete" class="btn btn-danger"
+                       onclick="return confirm('Confirm')">
+                <input type="button" value="cancel" onclick="history.back()" class="btn btn-secondary">
+            </form>
+        </div>
+    </div>
+{% endblock %}
